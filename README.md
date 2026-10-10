@@ -193,7 +193,7 @@ cd 18-sentiment-analysis-platform
 
 # Track A：只需 numpy/scikit-learn，19 秒
 python3 -m venv .venv
-.venv/bin/pip install -r <(echo -e "numpy\nscikit-learn\nscipy\njoblib\nfastapi\nuvicorn\npydantic\npytest\nhttpx")
+.venv/bin/pip install -r requirements.txt
 .venv/bin/python -m app.models.train_cli
 
 # 启动（端口 5055）
