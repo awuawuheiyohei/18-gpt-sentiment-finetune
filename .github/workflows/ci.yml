@@ -1,0 +1,80 @@
+name: CI
+
+on:
+  push:
+    branches: [main, master]
+  pull_request:
+
+jobs:
+  test:
+    name: pytest (py${{ matrix.python-version }})
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ["3.11", "3.12", "3.13"]
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      # ⚠️ 刻意**不安装 torch**：Track A（推理服务 + 全部测试）只依赖
+      # numpy/scikit-learn/scipy/fastapi。装 torch 会让 CI 多花数分钟拉 2GB 依赖。
+      # Track B 的测试用 requires_torch 标记，在没有 torch 时自动 skip。
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install "numpy>=1.24" "scikit-learn>=1.3" "scipy>=1.10" \
+                      "joblib>=1.3" "fastapi>=0.110" "uvicorn>=0.27" \
+                      "pydantic>=2.0" "pytest>=8.0" "httpx>=0.27"
+
+      - name: Verify torch is genuinely absent (tests must still pass)
+        run: |
+          python -c "import torch" 2>/dev/null && { echo "::error::torch should not be installed"; exit 1; } || echo "torch not installed — as intended"
+
+      - name: Run unit and integration tests
+        run: python -m pytest tests/ -q
+
+  smoke:
+    name: smoke test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install "numpy>=1.24" "scikit-learn>=1.3" "scipy>=1.10" \
+                      "joblib>=1.3" "fastapi>=0.110" "uvicorn>=0.27" "pydantic>=2.0"
+
+      # 模型产物已 gitignore，这里真实训练一次 —— 既验证训练脚本可跑，
+      # 也让 smoke 能校验"训练产出的指标 > 0.8"这条不变量。
+      - name: Train Track A baseline
+        run: python -m app.models.train_cli
+
+      - name: Regenerate evaluation report from JSON
+        run: python3 scripts/build_eval_report.py
+
+      - name: Verify README/EVAL_REPORT contain no placeholder metrics
+        run: |
+          # 防止有人把估算数字写进文档：占位符必须为 0 个
+          ! grep -nE "TODO|TBD|待填|placeholder|XXX" EVAL_REPORT.md README.md
+
+      - name: Upload evaluation artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: evaluation-json
+          path: |
+            reports/evaluation.json
+            EVAL_REPORT.md
+
+      - name: Run smoke test
+        run: ./scripts/smoke_test.sh

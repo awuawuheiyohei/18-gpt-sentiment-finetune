@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>中文情感分析平台 · Demo</title>
+<style>
+  :root {
+    --bg: #0d1117;
+    --panel: #161b22;
+    --panel-2: #1c2430;
+    --border: #30363d;
+    --text: #e6edf3;
+    --muted: #8b949e;
+    --accent: #58a6ff;
+    --pos: #3fb950;
+    --neg: #f85149;
+    --warn: #d29922;
+    --radius: 10px;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; padding: 0;
+    background: var(--bg); color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", "Segoe UI", sans-serif;
+    line-height: 1.6;
+  }
+  header {
+    padding: 28px 32px 20px;
+    border-bottom: 1px solid var(--border);
+    display: flex; justify-content: space-between; align-items: flex-end;
+    flex-wrap: wrap; gap: 12px;
+  }
+  h1 { margin: 0; font-size: 22px; letter-spacing: .3px; }
+  h1 small { display:block; font-size: 13px; color: var(--muted); font-weight: 400; margin-top: 6px; }
+  main { max-width: 1180px; margin: 0 auto; padding: 24px 32px 60px; }
+  .card { background: var(--panel); border: 1px solid var(--border); border-radius: var(--radius); padding: 20px; margin-bottom: 20px; }
+  .card h2 { margin: 0 0 14px; font-size: 15px; color: var(--muted); font-weight: 600; text-transform: uppercase; letter-spacing: .8px; }
+  textarea {
+    width: 100%; min-height: 92px; padding: 12px 14px;
+    background: var(--bg); color: var(--text);
+    border: 1px solid var(--border); border-radius: 8px;
+    font-family: inherit; font-size: 15px; resize: vertical;
+  }
+  textarea:focus { outline: none; border-color: var(--accent); }
+  .row { display: flex; gap: 12px; margin-top: 14px; align-items: center; flex-wrap: wrap; }
+  button {
+    background: var(--accent); color: #04121f; border: 0;
+    padding: 9px 20px; border-radius: 8px; font-size: 14px; font-weight: 600;
+    cursor: pointer; font-family: inherit;
+  }
+  button:hover { filter: brightness(1.1); }
+  button:disabled { opacity: .5; cursor: not-allowed; }
+  button.ghost { background: transparent; color: var(--muted); border: 1px solid var(--border); }
+  .examples { display: flex; gap: 8px; flex-wrap: wrap; }
+  .examples button { background: var(--panel-2); color: var(--muted); border: 1px solid var(--border); font-weight: 400; font-size: 13px; padding: 6px 12px; }
+  .verdict { display: flex; gap: 16px; align-items: center; flex-wrap: wrap; }
+  .badge { font-size: 26px; font-weight: 700; padding: 10px 22px; border-radius: 8px; }
+  .badge.pos { background: rgba(63,185,80,.15); color: var(--pos); border: 1px solid var(--pos); }
+  .badge.neg { background: rgba(248,81,73,.15); color: var(--neg); border: 1px solid var(--pos); border-color: var(--neg); }
+  .conf { font-size: 15px; color: var(--muted); }
+  .conf b { color: var(--text); font-size: 19px; }
+  .bar { height: 7px; background: var(--panel-2); border-radius: 4px; overflow: hidden; margin-top: 8px; width: 260px; }
+  .bar > div { height: 100%; border-radius: 4px; transition: width .3s; }
+  .cols { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+  @media (max-width: 820px) { .cols { grid-template-columns: 1fr; } }
+  table { width: 100%; border-collapse: collapse; font-size: 13.5px; }
+  th, td { text-align: left; padding: 8px 10px; border-bottom: 1px solid var(--border); }
+  th { color: var(--muted); font-weight: 600; font-size: 12px; text-transform: uppercase; letter-spacing: .5px; }
+  td.term { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; }
+  td.val { text-align: right; font-variant-numeric: tabular-nums; }
+  .pos-txt { color: var(--pos); } .neg-txt { color: var(--neg); }
+  .note { font-size: 12.5px; color: var(--muted); margin-top: 10px; }
+  .status { font-size: 13px; display: flex; gap: 8px; align-items: center; }
+  .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--muted); }
+  .dot.ok { background: var(--pos); } .dot.bad { background: var(--neg); }
+  .kv { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px,1fr)); gap: 12px; }
+  .kv div { background: var(--panel-2); padding: 10px 12px; border-radius: 8px; }
+  .kv span { display:block; color: var(--muted); font-size: 12px; }
+  .kv b { font-size: 17px; font-variant-numeric: tabular-nums; }
+  code { background: var(--panel-2); padding: 1px 6px; border-radius: 4px; font-size: 12.5px; }
+  .hidden { display: none; }
+</style>
+</head>
+<body>
+<header>
+  <h1>中文情感分析平台
+    <small>Track A · 字符 n-gram + 词典特征 + LogisticRegression　|　可解释：每条预测都给出特征贡献</small>
+  </h1>
+  <div class="status"><span class="dot" id="dot"></span><span id="statusText">连接中…</span></div>
+</header>
+
+<main>
+  <div class="card">
+    <h2>输入评论</h2>
+    <textarea id="input" placeholder="例如：很快，好吃，味道足，量大">很快，好吃，味道足，量大</textarea>
+    <div class="row">
+      <button id="btn">分析</button>
+      <button class="ghost" id="btnBatch">批量分析（用示例）</button>
+    </div>
+    <div class="row examples">
+      <button data-t="送餐送错，还狡辩不给补偿，等了三个小时">负面示例</button>
+      <button data-t="菜味道很棒！送餐很及时！">正面示例</button>
+      <button data-t="菜品质量好，味道好，就是百度的问题，总是用运力原因来解释">反讽示例</button>
+      <button data-t="还行吧">中性示例</button>
+    </div>
+    <p class="note">反讽示例刻意选自数据集：词典把"好"当正面词，但整句其实是抱怨——线性模型的已知失效模式。</p>
+  </div>
+
+  <div class="card hidden" id="resultCard">
+    <h2>预测结果</h2>
+    <div class="verdict">
+      <span class="badge" id="verdict">—</span>
+      <div class="conf">置信度 <b id="conf">—</b>
+        <div class="bar"><div id="confBar"></div></div>
+      </div>
+      <div class="conf">词典得分 <b id="lexScore">—</b></div>
+    </div>
+    <p class="note">归一化后：<code id="normalized"></code></p>
+  </div>
+
+  <div class="cols">
+    <div class="card hidden" id="posCard">
+      <h2>推向正面的特征</h2>
+      <table><tbody id="posTable"></tbody></table>
+      <p class="note">贡献度 = 逻辑回归权重 × 该特征在本样本上的取值。</p>
+    </div>
+    <div class="card hidden" id="negCard">
+      <h2>推向负面的特征</h2>
+      <table><tbody id="negTable"></tbody></table>
+      <p class="note">贡献度 = 逻辑回归权重 × 该特征在本样本上的取值。</p>
+    </div>
+  </div>
+
+  <div class="card hidden" id="lexCard">
+    <h2>词典命中（与模型结论同向）</h2>
+    <table>
+      <thead><tr><th>词</th><th>原始极性</th><th>程度</th><th>否定翻转</th><th class="val">调整后贡献</th></tr></thead>
+      <tbody id="lexTable"></tbody>
+    </table>
+  </div>
+
+  <div class="card">
+    <h2>真实实测指标（来自 reports/evaluation.json）</h2>
+    <div class="kv" id="metrics"></div>
+    <p class="note" id="metricsNote"></p>
+  </div>
+
+  <div class="card">
+    <h2>模型元信息</h2>
+    <div class="kv" id="info"></div>
+  </div>
+</main>
+
+<script>
+const $ = (id) => document.getElementById(id);
+const EXAMPLES = [
+  "很快，好吃，味道足，量大",
+  "送餐送错，还狡辩不给补偿，等了三个小时",
+  "菜味道很棒！送餐很及时！",
+  "没什么味道，送来的晚凉了"
+];
+
+function rows(hostId, items, invert) {
+  const tbody = $(hostId);
+  tbody.innerHTML = "";
+  items.forEach((it) => {
+    const tr = document.createElement("tr");
+    const v = it.contribution;
+    tr.innerHTML =
+      `<td class="term">${escapeHtml(it.term)}</td>` +
+      `<td class="val ${invert ? "neg-txt" : "pos-txt"}">${v > 0 ? "+" : ""}${v.toFixed(4)}</td>`;
+    tbody.appendChild(tr);
+  });
+}
+function escapeHtml(s) {
+  return String(s).replace(/[&<>"']/g, (c) =>
+    ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+}
+
+async function api(path, options) {
+  const res = await fetch(path, options);
+  if (!res.ok) throw new Error("HTTP " + res.status);
+  return res.json();
+}
+
+async function run() {
+  const text = $("input").value.trim();
+  if (!text) return;
+  $("btn").disabled = true;
+  $("btn").textContent = "分析中…";
+  try {
+    const d = await api("/api/predict", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ text, top_k: 6 })
+    });
+    const isPos = d.label === 1;
+    $("resultCard").classList.remove("hidden");
+    $("verdict").textContent = d.label_name;
+    $("verdict").className = "badge " + (isPos ? "pos" : "neg");
+    $("conf").textContent = (d.confidence * 100).toFixed(1) + "%";
+    $("confBar").style.width = (d.confidence * 100) + "%";
+    $("confBar").style.background = isPos ? "var(--pos)" : "var(--neg)";
+    $("normalized").textContent = d.normalized;
+    $("lexScore").textContent = d.explanation.lexicon_score.toFixed(3);
+
+    $("posCard").classList.remove("hidden");
+    $("negCard").classList.remove("hidden");
+    rows("posTable", d.explanation.top_positive, false);
+    rows("negTable", d.explanation.top_negative, true);
+
+    const hits = d.explanation.lexicon_hits_aligned || [];
+    $("lexCard").classList.toggle("hidden", hits.length === 0);
+    const tbody = $("lexTable");
+    tbody.innerHTML = "";
+    hits.forEach((h) => {
+      const tr = document.createElement("tr");
+      tr.innerHTML =
+        `<td class="term">${escapeHtml(h.term)}</td>` +
+        `<td class="val ${h.polarity > 0 ? "pos-txt" : "neg-txt"}">${h.polarity}</td>` +
+        `<td class="val">${h.degree}</td>` +
+        `<td class="val">${h.negated ? "是" : "否"}</td>` +
+        `<td class="val ${h.adjusted > 0 ? "pos-txt" : "neg-txt"}">${h.adjusted}</td>`;
+      tbody.appendChild(tr);
+    });
+  } catch (e) {
+    alert("分析失败：" + e.message);
+  } finally {
+    $("btn").disabled = false;
+    $("btn").textContent = "分析";
+  }
+}
+
+async function runBatch() {
+  const texts = EXAMPLES;
+  const d = await api("/api/predict/batch", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ texts, top_k: 3 })
+  });
+  const lines = d.predictions.map(
+    (p) => `${p.label === 1 ? "正面" : "负面"} ${(p.confidence * 100).toFixed(1)}%  ${p.text}`
+  );
+  alert("批量结果：\n\n" + lines.join("\n"));
+}
+
+async function loadStatic() {
+  try {
+    const h = await api("/api/health");
+    $("dot").className = "dot " + (h.model_ready ? "ok" : "bad");
+    $("statusText").textContent = h.model_ready ? `服务正常 · v${h.version}` : "服务正常 · 模型未加载";
+  } catch (e) {
+    $("dot").className = "dot bad";
+    $("statusText").textContent = "服务不可用";
+  }
+
+  try {
+    const info = await api("/api/info");
+    const host = $("info");
+    const f = info.features || {};
+    host.innerHTML = "";
+    const items = [
+      ["特征维度", (f.total_features ?? "—").toLocaleString()],
+      ["字符 n-gram", f.spec ? `${f.spec.ngram_min}-${f.spec.ngram_max}` : "—"],
+      ["词典特征", f.spec && f.spec.use_dense ? "启用" : "关闭"],
+      ["正则强度 C", info.selected_config ? info.selected_config.C : "—"],
+      ["class_weight", info.selected_config ? (info.selected_config.class_weight ?? "None") : "—"],
+      ["词典词条", info.lexicon ? info.lexicon.total_sentiment : "—"],
+      ["训练时间", info.trained_at_utc ? info.trained_at_utc.replace("T", " ") : "—"],
+      ["sklearn", info.sklearn_version || "—"]
+    ];
+    items.forEach(([k, v]) => {
+      const d = document.createElement("div");
+      d.innerHTML = `<span>${k}</span><b>${escapeHtml(v)}</b>`;
+      host.appendChild(d);
+    });
+  } catch (e) { /* 模型未就绪时静默 */ }
+
+  try {
+    const m = await api("/api/metrics");
+    const t = (m.track_a && m.track_a.metrics && m.track_a.metrics.test) || null;
+    const host = $("metrics");
+    host.innerHTML = "";
+    if (t) {
+      const items = [
+        ["test accuracy", (t.accuracy * 100).toFixed(2) + "%"],
+        ["test macro-F1", (t.macro_f1 * 100).toFixed(2) + "%"],
+        ["macro precision", (t.macro_precision * 100).toFixed(2) + "%"],
+        ["macro recall", (t.macro_recall * 100).toFixed(2) + "%"],
+        ["test 样本数", t.n_samples]
+      ];
+      items.forEach(([k, v]) => {
+        const d = document.createElement("div");
+        d.innerHTML = `<span>${k}</span><b>${escapeHtml(v)}</b>`;
+        host.appendChild(d);
+      });
+      const cfg = (m.track_a.model && m.track_a.model.selected_config) || {};
+      $("metricsNote").textContent =
+        `混淆矩阵（行=真实 [负面,正面]，列=预测）：${JSON.stringify(t.confusion_matrix)}　|　` +
+        `选定超参 C=${cfg.C}, ngram=${cfg.ngram_min}-${cfg.ngram_max}, class_weight=${cfg.class_weight ?? "None"}　|　` +
+        `主指标 macro-F1（数据负面:正面 ≈ 2:1，accuracy 会虚高）。`;
+    } else {
+      $("metricsNote").textContent = "尚未生成评估产物，请先运行 python -m app.models.train_cli";
+    }
+  } catch (e) { /* ignore */ }
+}
+
+$("btn").addEventListener("click", run);
+$("btnBatch").addEventListener("click", runBatch);
+document.querySelectorAll(".examples button").forEach((b) =>
+  b.addEventListener("click", () => { $("input").value = b.dataset.t; run(); })
+);
+document.addEventListener("keydown", (e) => {
+  if ((e.metaKey || e.ctrlKey) && e.key === "Enter") run();
+});
+loadStatic();
+</script>
+</body>
+</html>

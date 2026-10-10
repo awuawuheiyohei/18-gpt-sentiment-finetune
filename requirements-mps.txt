@@ -1,0 +1,14 @@
+# Track B 依赖：LoRA 微调 + Apple Silicon MPS
+#
+# 本文件**不是**推理服务的要求。app/main.py 与全部 CI 测试都不需要 torch。
+# 只有执行 `python -m app.finetune.run_finetune` 时才需要。
+#
+# 实测环境（2026-10，Apple M5 arm64 / 24GB）：
+#   torch 2.14.1 | transformers 5.19.0 | peft 0.21.2 | Python 3.14.7
+#
+# 安装（约 2~3 GB，含 CUDA/PPS 无关后端，Apple Silicon 走 MPS 不需要 CUDA）：
+#   python3 -m venv .venv-mps
+#   .venv-mps/bin/pip install -r requirements-mps.txt
+torch>=2.2
+transformers>=4.40
+peft>=0.10

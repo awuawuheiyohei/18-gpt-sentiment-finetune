@@ -1,0 +1,466 @@
+{
+  "schema_version": "1.0",
+  "generated_at_utc": "2026-10-10T02:57:29+00:00",
+  "track": "B",
+  "device": {
+    "python": "3.14.7",
+    "platform": "macOS-26.6.2-arm64-arm-64bit-Mach-O",
+    "machine": "arm64",
+    "processor": "arm",
+    "torch": "2.14.1",
+    "mps_available": true,
+    "mps_built": true,
+    "physical_memory_gb": 24.0,
+    "selected_device": "mps"
+  },
+  "dataset": {
+    "splits": {
+      "train": 9574,
+      "dev": 1197,
+      "test": 1197
+    },
+    "label_counts_test": {
+      "0": 798,
+      "1": 399
+    },
+    "random_seed": 20220101,
+    "shared_split_with_track_a": true
+  },
+  "majority_baseline_test": {
+    "n_samples": 1197,
+    "accuracy": 0.666667,
+    "balanced_accuracy": 0.5,
+    "macro_precision": 0.333334,
+    "macro_recall": 0.5,
+    "macro_f1": 0.4,
+    "weighted_f1": 0.533333,
+    "per_class": {
+      "0": {
+        "precision": 0.666667,
+        "recall": 1.0,
+        "f1": 0.8,
+        "support": 798
+      },
+      "1": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "support": 399
+      }
+    },
+    "confusion_matrix": [
+      [
+        798,
+        0
+      ],
+      [
+        399,
+        0
+      ]
+    ]
+  },
+  "zero_shot": {
+    "train": {
+      "kind": "zero_shot",
+      "model_id": "IDEA-CCNL/Erlangshen-Roberta-110M-Sentiment",
+      "model_id_label_map": {
+        "0": "negative",
+        "1": "positive"
+      },
+      "split": "train",
+      "n_samples": 9574,
+      "max_len": 64,
+      "mean_confidence": 0.960082,
+      "metrics": {
+        "n_samples": 9574,
+        "accuracy": 0.970232,
+        "balanced_accuracy": 0.967337,
+        "macro_precision": 0.965815,
+        "macro_recall": 0.967337,
+        "macro_f1": 0.96657,
+        "weighted_f1": 0.970256,
+        "per_class": {
+          "0": {
+            "precision": 0.979249,
+            "recall": 0.976026,
+            "f1": 0.977635,
+            "support": 6382
+          },
+          "1": {
+            "precision": 0.952381,
+            "recall": 0.958647,
+            "f1": 0.955504,
+            "support": 3192
+          }
+        },
+        "confusion_matrix": [
+          [
+            6229,
+            153
+          ],
+          [
+            132,
+            3060
+          ]
+        ]
+      },
+      "resources": {
+        "elapsed_seconds": 37.43,
+        "peak_rss_bytes": 480559104,
+        "peak_rss_gb": 0.448,
+        "device_peak_allocated_bytes": 409291776,
+        "device_peak_allocated_gb": 0.381,
+        "measurement": "measured (time.perf_counter + resource.getrusage)"
+      },
+      "device": "mps"
+    },
+    "dev": {
+      "kind": "zero_shot",
+      "model_id": "IDEA-CCNL/Erlangshen-Roberta-110M-Sentiment",
+      "model_id_label_map": {
+        "0": "negative",
+        "1": "positive"
+      },
+      "split": "dev",
+      "n_samples": 1197,
+      "max_len": 64,
+      "mean_confidence": 0.960099,
+      "metrics": {
+        "n_samples": 1197,
+        "accuracy": 0.964912,
+        "balanced_accuracy": 0.95802,
+        "macro_precision": 0.962753,
+        "macro_recall": 0.95802,
+        "macro_f1": 0.960325,
+        "weighted_f1": 0.964822,
+        "per_class": {
+          "0": {
+            "precision": 0.968983,
+            "recall": 0.978697,
+            "f1": 0.973815,
+            "support": 798
+          },
+          "1": {
+            "precision": 0.956522,
+            "recall": 0.937343,
+            "f1": 0.946835,
+            "support": 399
+          }
+        },
+        "confusion_matrix": [
+          [
+            781,
+            17
+          ],
+          [
+            25,
+            374
+          ]
+        ]
+      },
+      "resources": {
+        "elapsed_seconds": 6.8,
+        "peak_rss_bytes": 489259008,
+        "peak_rss_gb": 0.456,
+        "device_peak_allocated_bytes": 409291776,
+        "device_peak_allocated_gb": 0.381,
+        "measurement": "measured (time.perf_counter + resource.getrusage)"
+      },
+      "device": "mps"
+    },
+    "test": {
+      "kind": "zero_shot",
+      "model_id": "IDEA-CCNL/Erlangshen-Roberta-110M-Sentiment",
+      "model_id_label_map": {
+        "0": "negative",
+        "1": "positive"
+      },
+      "split": "test",
+      "n_samples": 1197,
+      "max_len": 64,
+      "mean_confidence": 0.962398,
+      "metrics": {
+        "n_samples": 1197,
+        "accuracy": 0.972431,
+        "balanced_accuracy": 0.968045,
+        "macro_precision": 0.969824,
+        "macro_recall": 0.968045,
+        "macro_f1": 0.968927,
+        "weighted_f1": 0.972405,
+        "per_class": {
+          "0": {
+            "precision": 0.977528,
+            "recall": 0.981203,
+            "f1": 0.979362,
+            "support": 798
+          },
+          "1": {
+            "precision": 0.962121,
+            "recall": 0.954887,
+            "f1": 0.958491,
+            "support": 399
+          }
+        },
+        "confusion_matrix": [
+          [
+            783,
+            15
+          ],
+          [
+            18,
+            381
+          ]
+        ],
+        "macro_f1_ci95": {
+          "n_resamples": 200,
+          "method": "percentile_bootstrap",
+          "level": 0.95,
+          "lower": 0.958689,
+          "upper": 0.978744,
+          "point_estimate": 0.968927
+        }
+      },
+      "resources": {
+        "elapsed_seconds": 7.08,
+        "peak_rss_bytes": 489259008,
+        "peak_rss_gb": 0.456,
+        "device_peak_allocated_bytes": 409291776,
+        "device_peak_allocated_gb": 0.381,
+        "measurement": "measured (time.perf_counter + resource.getrusage)"
+      },
+      "device": "mps"
+    }
+  },
+  "lora_finetune": {
+    "kind": "lora_finetuned",
+    "base_model": "hfl/chinese-roberta-wwm-ext",
+    "device": "mps",
+    "hyperparams": {
+      "max_len": 64,
+      "batch_size": 16,
+      "eval_batch_size": 64,
+      "learning_rate": 0.0003,
+      "weight_decay": 0.01,
+      "epochs": 3,
+      "warmup_ratio": 0.1,
+      "max_grad_norm": 1.0,
+      "seed": 20220101,
+      "base_model": "hfl/chinese-roberta-wwm-ext",
+      "lora": {
+        "r": 8,
+        "alpha": 16,
+        "dropout": 0.05,
+        "target_modules": [
+          "query",
+          "value"
+        ],
+        "bias": "none",
+        "task_type": "SEQ_CLS"
+      },
+      "trainable_params": 296450,
+      "total_params": 102565636,
+      "trainable_ratio_pct": 0.289
+    },
+    "best_epoch": 1,
+    "selection": "dev macro-F1，逐 epoch 选优",
+    "metrics": {
+      "dev": {
+        "n_samples": 1197,
+        "accuracy": 0.907268,
+        "balanced_accuracy": 0.884085,
+        "macro_precision": 0.904583,
+        "macro_recall": 0.884085,
+        "macro_f1": 0.893083,
+        "weighted_f1": 0.906064,
+        "per_class": {
+          "0": {
+            "precision": 0.911377,
+            "recall": 0.953634,
+            "f1": 0.932027,
+            "support": 798
+          },
+          "1": {
+            "precision": 0.89779,
+            "recall": 0.814536,
+            "f1": 0.854139,
+            "support": 399
+          }
+        },
+        "confusion_matrix": [
+          [
+            761,
+            37
+          ],
+          [
+            74,
+            325
+          ]
+        ]
+      },
+      "test": {
+        "n_samples": 1197,
+        "accuracy": 0.911445,
+        "balanced_accuracy": 0.890351,
+        "macro_precision": 0.908025,
+        "macro_recall": 0.890351,
+        "macro_f1": 0.898254,
+        "weighted_f1": 0.910466,
+        "per_class": {
+          "0": {
+            "precision": 0.916867,
+            "recall": 0.953634,
+            "f1": 0.934889,
+            "support": 798
+          },
+          "1": {
+            "precision": 0.899183,
+            "recall": 0.827068,
+            "f1": 0.861619,
+            "support": 399
+          }
+        },
+        "confusion_matrix": [
+          [
+            761,
+            37
+          ],
+          [
+            69,
+            330
+          ]
+        ],
+        "macro_f1_ci95": {
+          "n_resamples": 200,
+          "method": "percentile_bootstrap",
+          "level": 0.95,
+          "lower": 0.880865,
+          "upper": 0.915774,
+          "point_estimate": 0.898254
+        }
+      }
+    },
+    "history": [
+      {
+        "epoch": 1,
+        "train_loss": 0.347961,
+        "dev_macro_f1": 0.893083,
+        "dev_accuracy": 0.907268,
+        "seconds": 90.9
+      },
+      {
+        "epoch": 2,
+        "train_loss": 0.242398,
+        "dev_macro_f1": 0.890243,
+        "dev_accuracy": 0.902256,
+        "seconds": 90.96
+      },
+      {
+        "epoch": 3,
+        "train_loss": 0.218558,
+        "dev_macro_f1": 0.891849,
+        "dev_accuracy": 0.903926,
+        "seconds": 89.87
+      }
+    ],
+    "runtime": {
+      "python": "3.14.7",
+      "torch": "2.14.1",
+      "transformers": "5.19.0",
+      "peft": "0.21.2",
+      "platform": "macOS-26.6.2-arm64-arm-64bit-Mach-O",
+      "machine": "arm64"
+    },
+    "resources": {
+      "elapsed_seconds": 285.04,
+      "peak_rss_bytes": 1015742464,
+      "peak_rss_gb": 0.946,
+      "device_peak_allocated_bytes": 413953024,
+      "device_peak_allocated_gb": 0.386,
+      "measurement": "measured (time.perf_counter + resource.getrusage)"
+    }
+  },
+  "lora": {
+    "base_model": "hfl/chinese-roberta-wwm-ext",
+    "best_epoch": 1,
+    "model_info": {
+      "base_model": "hfl/chinese-roberta-wwm-ext",
+      "lora": {
+        "r": 8,
+        "alpha": 16,
+        "dropout": 0.05,
+        "target_modules": [
+          "query",
+          "value"
+        ],
+        "bias": "none",
+        "task_type": "SEQ_CLS"
+      },
+      "trainable_params": 296450,
+      "total_params": 102565636,
+      "trainable_ratio_pct": 0.289
+    }
+  },
+  "resources": {
+    "total_elapsed_seconds": 336.36
+  },
+  "cross_track": {
+    "rows": {
+      "track_a_char_ngram_logreg": {
+        "description": "字符 n-gram TF-IDF + 词典特征 + LogisticRegression",
+        "accuracy": 0.906433,
+        "macro_f1": 0.894869,
+        "macro_precision": 0.89438,
+        "macro_recall": 0.895363,
+        "confusion_matrix": [
+          [
+            741,
+            57
+          ],
+          [
+            55,
+            344
+          ]
+        ],
+        "macro_f1_delta_vs_track_a": 0.0
+      },
+      "track_b_zeroshot_erlangshen": {
+        "description": "Erlangshen-Roberta-110M-Sentiment 零样本",
+        "accuracy": 0.972431,
+        "macro_f1": 0.968927,
+        "macro_precision": 0.969824,
+        "macro_recall": 0.968045,
+        "confusion_matrix": [
+          [
+            783,
+            15
+          ],
+          [
+            18,
+            381
+          ]
+        ],
+        "macro_f1_delta_vs_track_a": 0.074058
+      },
+      "track_b_lora_finetuned": {
+        "description": "hfl/chinese-roberta-wwm-ext + LoRA",
+        "accuracy": 0.911445,
+        "macro_f1": 0.898254,
+        "macro_precision": 0.908025,
+        "macro_recall": 0.890351,
+        "confusion_matrix": [
+          [
+            761,
+            37
+          ],
+          [
+            69,
+            330
+          ]
+        ],
+        "macro_f1_delta_vs_track_a": 0.003385
+      }
+    },
+    "note": "三行共用同一份 train/dev/test 划分（RANDOM_SEED=20220101），可直接比较",
+    "random_seed": 20220101
+  }
+}

@@ -1,0 +1,30 @@
+# ---- Python ----
+__pycache__/
+*.py[cod]
+*.egg-info/
+build/
+dist/
+.venv/
+venv/
+
+# ---- 测试与缓存 ----
+.pytest_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+
+# ---- 训练产物（可由脚本重建，不入库）----
+# Track A 的 joblib 与 scikit-learn 版本强相关，跨版本会 InconsistentVersionError，
+# 因此不入库；scripts/smoke_test.sh 会在缺失时自动重训（约 30 秒）。
+models/*.joblib
+data/processed/
+
+# 注意：models/lora_adapter/（LoRA 适配器，约 1.6MB）**故意入库**，
+# 它是 Track B 真实跑过的证据。reports/*.json 同理入库。
+
+# ---- 本地环境 ----
+.env
+.venv-18/
+.DS_Store
+.idea/
+.vscode/
