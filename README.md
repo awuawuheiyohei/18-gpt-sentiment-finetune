@@ -188,7 +188,7 @@ LoRA 配置：`r=8, alpha=16, dropout=0.05, target_modules=[query, value]`，
 ## 快速开始
 
 ```bash
-git clone https://github.com/awuawuheiyohei/18-sentiment-analysis-platform.git
+git clone https://github.com/awuawuheiyohei/18-gpt-sentiment-finetune.git
 cd 18-sentiment-analysis-platform
 
 # Track A：只需 numpy/scikit-learn，19 秒
