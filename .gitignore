@@ -24,7 +24,14 @@ data/processed/
 
 # ---- 本地环境 ----
 .env
+.venv-*/
 .venv-18/
 .DS_Store
 .idea/
 .vscode/
+
+# ---- 2026-10-14 净室复现的临时产物 ----
+# _baseline_20261014/ 是复现前的产物备份（已证明与新产物逐项一致，可安全删）
+# _run_20261014/    是复现过程的原始 stdout，蒸馏版见 docs/RUN_LOG.md
+_baseline_20261014/
+_run_20261014/

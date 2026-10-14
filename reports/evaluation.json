@@ -1,11 +1,11 @@
 {
   "schema_version": "1.0",
-  "generated_at_utc": "2026-10-10T02:38:04+00:00",
+  "generated_at_utc": "2026-10-14T12:54:22+00:00",
   "runtime": {
     "python": "3.14.7",
-    "platform": "macOS-26.6.2-arm64-arm-64bit-Mach-O",
+    "platform": "macOS-27.0.1-arm64-arm-64bit-Mach-O",
     "machine": "arm64",
-    "numpy": "2.5.3",
+    "numpy": "2.5.4",
     "scikit_learn": "1.9.1",
     "gpu": "none (CPU-only baseline track)"
   },
@@ -102,7 +102,7 @@
       "min_df": 2,
       "dev_macro_f1": 0.863609,
       "dev_accuracy": 0.882206,
-      "fit_seconds": 0.627
+      "fit_seconds": 0.725
     },
     {
       "C": 0.5,
@@ -113,7 +113,7 @@
       "min_df": 2,
       "dev_macro_f1": 0.858515,
       "dev_accuracy": 0.87218,
-      "fit_seconds": 0.636
+      "fit_seconds": 1.339
     },
     {
       "C": 0.5,
@@ -124,7 +124,7 @@
       "min_df": 2,
       "dev_macro_f1": 0.859938,
       "dev_accuracy": 0.878864,
-      "fit_seconds": 0.836
+      "fit_seconds": 2.174
     },
     {
       "C": 0.5,
@@ -135,7 +135,7 @@
       "min_df": 2,
       "dev_macro_f1": 0.855148,
       "dev_accuracy": 0.868839,
-      "fit_seconds": 0.797
+      "fit_seconds": 1.648
     },
     {
       "C": 0.5,
@@ -146,7 +146,7 @@
       "min_df": 2,
       "dev_macro_f1": 0.861674,
       "dev_accuracy": 0.880535,
-      "fit_seconds": 1.03
+      "fit_seconds": 1.719
     },
     {
       "C": 0.5,
@@ -157,7 +157,7 @@
       "min_df": 2,
       "dev_macro_f1": 0.853976,
       "dev_accuracy": 0.868003,
-      "fit_seconds": 1.057
+      "fit_seconds": 2.103
     },
     {
       "C": 1.0,
@@ -168,7 +168,7 @@
       "min_df": 2,
       "dev_macro_f1": 0.869783,
       "dev_accuracy": 0.887218,
-      "fit_seconds": 0.615
+      "fit_seconds": 1.071
     },
     {
       "C": 1.0,
@@ -179,7 +179,7 @@
       "min_df": 2,
       "dev_macro_f1": 0.867763,
       "dev_accuracy": 0.880535,
-      "fit_seconds": 0.612
+      "fit_seconds": 1.015
     },
     {
       "C": 1.0,
@@ -190,7 +190,7 @@
       "min_df": 2,
       "dev_macro_f1": 0.870838,
       "dev_accuracy": 0.888053,
-      "fit_seconds": 0.819
+      "fit_seconds": 1.037
     },
     {
       "C": 1.0,
@@ -201,7 +201,7 @@
       "min_df": 2,
       "dev_macro_f1": 0.860204,
       "dev_accuracy": 0.873851,
-      "fit_seconds": 0.876
+      "fit_seconds": 1.095
     },
     {
       "C": 1.0,
@@ -212,7 +212,7 @@
       "min_df": 2,
       "dev_macro_f1": 0.869094,
       "dev_accuracy": 0.886383,
-      "fit_seconds": 1.103
+      "fit_seconds": 2.066
     },
     {
       "C": 1.0,
@@ -223,7 +223,7 @@
       "min_df": 2,
       "dev_macro_f1": 0.858188,
       "dev_accuracy": 0.87218,
-      "fit_seconds": 1.113
+      "fit_seconds": 1.448
     },
     {
       "C": 4.0,
@@ -234,7 +234,7 @@
       "min_df": 2,
       "dev_macro_f1": 0.872426,
       "dev_accuracy": 0.888889,
-      "fit_seconds": 0.672
+      "fit_seconds": 0.807
     },
     {
       "C": 4.0,
@@ -245,7 +245,7 @@
       "min_df": 2,
       "dev_macro_f1": 0.871715,
       "dev_accuracy": 0.884712,
-      "fit_seconds": 0.661
+      "fit_seconds": 0.797
     },
     {
       "C": 4.0,
@@ -256,7 +256,7 @@
       "min_df": 2,
       "dev_macro_f1": 0.873988,
       "dev_accuracy": 0.889724,
-      "fit_seconds": 0.877
+      "fit_seconds": 1.093
     },
     {
       "C": 4.0,
@@ -267,7 +267,7 @@
       "min_df": 2,
       "dev_macro_f1": 0.876999,
       "dev_accuracy": 0.889724,
-      "fit_seconds": 0.868
+      "fit_seconds": 1.18
     },
     {
       "C": 4.0,
@@ -278,7 +278,7 @@
       "min_df": 2,
       "dev_macro_f1": 0.873817,
       "dev_accuracy": 0.889724,
-      "fit_seconds": 1.175
+      "fit_seconds": 1.416
     },
     {
       "C": 4.0,
@@ -289,7 +289,7 @@
       "min_df": 2,
       "dev_macro_f1": 0.878004,
       "dev_accuracy": 0.89056,
-      "fit_seconds": 1.156
+      "fit_seconds": 1.479
     }
   ],
   "baselines_dev": {
@@ -498,5 +498,5 @@
     "macro_f1_gain_over_dummy": 0.494869,
     "accuracy_gain_over_dummy": 0.239766
   },
-  "total_seconds": 18.99
+  "total_seconds": 28.26
 }

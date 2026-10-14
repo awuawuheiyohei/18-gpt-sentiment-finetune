@@ -1,10 +1,10 @@
 {
   "schema_version": "1.0",
-  "generated_at_utc": "2026-10-10T02:57:29+00:00",
+  "generated_at_utc": "2026-10-14T12:55:55+00:00",
   "track": "B",
   "device": {
     "python": "3.14.7",
-    "platform": "macOS-26.6.2-arm64-arm-64bit-Mach-O",
+    "platform": "macOS-27.0.1-arm64-arm-64bit-Mach-O",
     "machine": "arm64",
     "processor": "arm",
     "torch": "2.14.1",
@@ -105,9 +105,9 @@
         ]
       },
       "resources": {
-        "elapsed_seconds": 37.43,
-        "peak_rss_bytes": 480559104,
-        "peak_rss_gb": 0.448,
+        "elapsed_seconds": 38.48,
+        "peak_rss_bytes": 578011136,
+        "peak_rss_gb": 0.538,
         "device_peak_allocated_bytes": 409291776,
         "device_peak_allocated_gb": 0.381,
         "measurement": "measured (time.perf_counter + resource.getrusage)"
@@ -159,9 +159,9 @@
         ]
       },
       "resources": {
-        "elapsed_seconds": 6.8,
-        "peak_rss_bytes": 489259008,
-        "peak_rss_gb": 0.456,
+        "elapsed_seconds": 7.27,
+        "peak_rss_bytes": 583974912,
+        "peak_rss_gb": 0.544,
         "device_peak_allocated_bytes": 409291776,
         "device_peak_allocated_gb": 0.381,
         "measurement": "measured (time.perf_counter + resource.getrusage)"
@@ -221,9 +221,9 @@
         }
       },
       "resources": {
-        "elapsed_seconds": 7.08,
-        "peak_rss_bytes": 489259008,
-        "peak_rss_gb": 0.456,
+        "elapsed_seconds": 6.22,
+        "peak_rss_bytes": 583974912,
+        "peak_rss_gb": 0.544,
         "device_peak_allocated_bytes": 409291776,
         "device_peak_allocated_gb": 0.381,
         "measurement": "measured (time.perf_counter + resource.getrusage)"
@@ -345,21 +345,21 @@
         "train_loss": 0.347961,
         "dev_macro_f1": 0.893083,
         "dev_accuracy": 0.907268,
-        "seconds": 90.9
+        "seconds": 140.22
       },
       {
         "epoch": 2,
         "train_loss": 0.242398,
         "dev_macro_f1": 0.890243,
         "dev_accuracy": 0.902256,
-        "seconds": 90.96
+        "seconds": 132.95
       },
       {
         "epoch": 3,
         "train_loss": 0.218558,
         "dev_macro_f1": 0.891849,
         "dev_accuracy": 0.903926,
-        "seconds": 89.87
+        "seconds": 162.41
       }
     ],
     "runtime": {
@@ -367,13 +367,13 @@
       "torch": "2.14.1",
       "transformers": "5.19.0",
       "peft": "0.21.2",
-      "platform": "macOS-26.6.2-arm64-arm-64bit-Mach-O",
+      "platform": "macOS-27.0.1-arm64-arm-64bit-Mach-O",
       "machine": "arm64"
     },
     "resources": {
-      "elapsed_seconds": 285.04,
-      "peak_rss_bytes": 1015742464,
-      "peak_rss_gb": 0.946,
+      "elapsed_seconds": 454.6,
+      "peak_rss_bytes": 980402176,
+      "peak_rss_gb": 0.913,
       "device_peak_allocated_bytes": 413953024,
       "device_peak_allocated_gb": 0.386,
       "measurement": "measured (time.perf_counter + resource.getrusage)"
@@ -401,7 +401,7 @@
     }
   },
   "resources": {
-    "total_elapsed_seconds": 336.36
+    "total_elapsed_seconds": 506.57
   },
   "cross_track": {
     "rows": {

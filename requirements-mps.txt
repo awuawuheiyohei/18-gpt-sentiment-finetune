@@ -12,3 +12,15 @@
 torch>=2.2
 transformers>=4.40
 peft>=0.10
+
+# ⚠️ scipy / scikit-learn 不是可选项，**必须**装。
+#
+# 原因：app/finetune/__init__.py → zeroshot.py → app.models.dataset →
+#       app.features.__init__ → app.features.pipeline → `from scipy import sparse`
+# 这条导入链在 `python -m app.finetune.run_finetune` 启动时就会执行，
+# 所以缺 scipy 会在**训练开始前**直接 ModuleNotFoundError 崩掉。
+#
+# 2026-10-14 净室复现时实测：只装上面 4 行，Track B 根本起不来。
+# 若不打算跑 Track B，可以不装 torch，Track A 与全部 CI 测试都不需要它们。
+scipy>=1.10
+scikit-learn>=1.3
